@@ -91,10 +91,9 @@ class sfLuceneDoctrineIndexer extends sfLuceneModelIndexer
     $retval = array();
 
     $error = error_reporting(0);
-    $i18n = sfContext::getInstance()->getI18N();
     error_reporting($error);
 
-    if ($i18n)
+    if (sfConfig::get('sf_i18n'))
     {
       $i18n = $this->getSearch()->getContext()->getI18N();
       $i18n->setMessageSource(null, $this->getSearch()->getParameter('culture'));
