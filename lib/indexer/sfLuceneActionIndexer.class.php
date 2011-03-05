@@ -27,10 +27,9 @@ class sfLuceneActionIndexer extends sfLuceneIndexer
 
     $config = sfConfig::get('sf_app_dir') . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR  . $module . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'search.yml';
 
-    include(sfConfigCache::getInstance()->checkConfig($config));
+    include(sfContext::getInstance()->getConfigCache()->checkConfig($config));
 
-    if (!isset($actions[$this->getSearch()->getParameter('name')][$action]))
-    {
+    if(!array_key_exists($action, $config[$this->getSearch()->getParameter('name')]['actions'])) {
       throw new sfLuceneIndexerException('Specified action is not registered for indexing');
     }
 
