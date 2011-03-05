@@ -197,15 +197,16 @@ To setup an action to be indexed, you must create a file in the module's config 
 
 {{{
 MyIndex:
-  privacy:
-  tos:
+  actions:
+    privacy:
+    tos:
     security:
-      authenticated: true
-      credentials: [admin]
-  disclaimer:
-    params:
-      advanced: true
-    layout: true
+        authenticated: true
+        credentials: [admin]
+    disclaimer:
+      params:
+        advanced: true
+      layout: true
 }}}
 
 Remember to prefix each one with the name of the index.
