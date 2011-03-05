@@ -42,25 +42,30 @@ class sfLuceneActionIndexerHandler extends sfLuceneIndexerHandler
       throw new sfLuceneIndexerException(sprintf('Unable to read "%s"', $config));
     }
 
-    include(sfConfigCache::getInstance()->checkConfig($config));
+    include(sfContext::getInstance()->getConfigCache()->checkConfig($config));
 
-    if (!isset($actions) || !is_array($actions))
+    if (!isset($config[$this->getSearch()->getParameter('name')]['actions']) || !is_array($config[$this->getSearch()->getParameter('name')]['actions']))
     {
       throw new sfLuceneIndexerException(sprintf('No actions were defined for module "%s", but a search.yml file was found', $module));
     }
-    elseif (count($actions) == 0)
+    elseif (count($config[$this->getSearch()->getParameter('name')]['actions']) == 0)
     {
       return;
     }
 
-    if (isset($actions[$this->getSearch()->getParameter('name')]))
+    if (isset($config[$this->getSearch()->getParameter('name')]['actions']))
     {
-      $this->getSearch()->getEventDispatcher()->notify(new sfEvent($this, 'indexer.log', array('Discovered %d actions in module "%s"', count($actions[$this->getSearch()->getParameter('name')]), $module)));
+      $this->getSearch()->getEventDispatcher()->notify(new sfEvent($this, 'indexer.log', array('Discovered %d actions in module "%s"', count($config[$this->getSearch()->getParameter('name')]['actions']), $module)));
 
-      foreach ($actions[$this->getSearch()->getParameter('name')] as $action => $properties)
+      foreach ($config[$this->getSearch()->getParameter('name')]['actions'] as $action => $properties)
       {
         $this->getFactory()->getAction($module, $action)->save();
       }
     }
+
+
+
+
+    
   }
 }
