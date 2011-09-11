@@ -174,9 +174,15 @@ abstract class sfLuceneModelIndexer extends sfLuceneIndexer
       $boost = $field_properties->get('boost');
 
       // validate value to make sure we can really index this
-      if (is_object($value) && method_exists($value, '__toString'))
+      if (is_object($value))
       {
-        $value = $value->__toString();
+        if(!$value->exists())
+        {
+          $this->getModel()->clearRelated(sfInflector::camelize($field));
+          $value = '';
+        }
+        elseif(method_exists($value, '__toString'))
+          $value = $value->__toString();
       }
       elseif (is_null($value))
       {
