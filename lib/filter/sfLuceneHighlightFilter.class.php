@@ -138,7 +138,7 @@ class sfLuceneHighlightFilter extends sfFilter
 //      $terms = $this->prepareTerms($terms);
 
       $this->doHighlight($terms);
-      $this->addNotice($terms);
+//      $this->addNotice($terms);
       $this->addCss();
 
       return true;
@@ -164,7 +164,7 @@ class sfLuceneHighlightFilter extends sfFilter
             $terms = $this->prepareTerms($matches[1]);
 
             $this->doHighlight($terms);
-            $this->addNotice($terms, $value['name']);
+//            $this->addNotice($terms, $value['name']);
             $this->addCss();
 
             // stop looking for referers now.
