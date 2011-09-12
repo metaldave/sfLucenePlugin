@@ -28,7 +28,6 @@ class sfLuceneDoctrineIndexer extends sfLuceneModelIndexer
     {
       return $this;
     }
-
     $old_culture = null;
     
     // automatic symfony i18n detection
