@@ -135,7 +135,7 @@ class sfLuceneHighlightFilter extends sfFilter
     // attempt to highlight from sfLucene
     if ($terms)
     {
-      $terms = $this->prepareTerms($terms);
+//      $terms = $this->prepareTerms($terms);
 
       $this->doHighlight($terms);
       $this->addNotice($terms);
@@ -182,15 +182,24 @@ class sfLuceneHighlightFilter extends sfFilter
   /**
    * Highlights the content for $terms
    */
-  protected function doHighlight(array $terms)
+//  protected function doHighlight(array $terms)
+  protected function doHighlight($terms)
   {
+//    $content = $this->getContext()->getResponse()->getContent();
+//
+//    // configure highlighter
+//    $lighter = new sfLuceneHighlighterXHTML($content);
+//    $lighter->addKeywords($terms);
+//
+//    $this->getContext()->getResponse()->setContent($lighter->highlight()->export());
+
+    sfLuceneToolkit::loadZend();    
     $content = $this->getContext()->getResponse()->getContent();
 
-    // configure highlighter
-    $lighter = new sfLuceneHighlighterXHTML($content);
-    $lighter->addKeywords($terms);
+    $query = Zend_Search_Lucene_Search_QueryParser::parse($terms);
+    $highlightedHTML = $query->highlightMatches($content);
 
-    $this->getContext()->getResponse()->setContent($lighter->highlight()->export());
+    $this->getContext()->getResponse()->setContent($highlightedHTML);
   }
 
   /**
