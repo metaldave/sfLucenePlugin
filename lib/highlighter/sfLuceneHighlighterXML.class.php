@@ -49,7 +49,8 @@ class sfLuceneHighlighterXML extends sfLuceneHighlighter
     $this->document->resolveExternals = true;
     $this->document->substituteEntities = false;
 
-    if (!$this->document->loadXML($this->data))
+//    if (!$this->document->loadXML($this->data))
+    if (!$this->document->loadHTML($this->data))
     {
       $errors = libxml_get_errors();
 
