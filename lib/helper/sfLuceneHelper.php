@@ -31,7 +31,8 @@ function include_search_pager($pager, $form, $radius = 5)
 
 function highlight_result_text($text, $query, $size = 200, $sprint = '<strong class="highlight">%s</strong>')
 {
-
+  $query = html_entity_decode($query,ENT_QUOTES,sfConfig::get('sf_charset'));
+  
   $highlighter = new sfLuceneHighlighterString($text);
 
   $marker = new sfLuceneHighlighterMarkerSprint($sprint);
